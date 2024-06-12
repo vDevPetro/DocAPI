@@ -1,0 +1,9 @@
+
+# dotenv environment variables file
+.env
+.env.local
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
