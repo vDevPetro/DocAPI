@@ -42,16 +42,11 @@ app.post('/as', (req, res) => {
 });
 
 // PUT https://apisiproj.vercel.app/as/:id
-app.put('/as/:id', (req, res) => {
-    const id = req.params.id;
-    
+app.put('/as/:id', async (req, res) => {
+
 });
 
 // DELETE https://apisiproj.vercel.app/as/:id
-app.delete('/as/:id', (req, res) => {
-    const id = req.params.id;
-    
-});
 
 app.listen(3000);
 
