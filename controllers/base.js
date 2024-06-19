@@ -1,6 +1,6 @@
-import db from './firebase.js'; 
+import db from '../firebase.js'; 
 
-const getAllBase = async (req, res) => {
+export const getAllBase = async (req, res) => {
   try {
       const snapshot = await db.collection('AS').get();
       const itens = snapshot.docs.map(doc => ({
@@ -13,7 +13,7 @@ const getAllBase = async (req, res) => {
   }    
 }
 
-const getBaseId = async (req, res) => {
+export const getBaseId = async (req, res) => {
   try {
       const docRef = db.collection('AS').doc(req.params.id);
       const docSnap = await docRef.get();
@@ -28,7 +28,7 @@ const getBaseId = async (req, res) => {
   }
 }
 
-const postBase = async (req, res) => {
+export const postBase = async (req, res) => {
   try {
     const newItem = req.body; 
     const docRef = await db.collection("AS").add(newItem);
@@ -38,7 +38,7 @@ const postBase = async (req, res) => {
   }
 }
 
-const putBase =  async (req, res) => {
+export const putBase =  async (req, res) => {
   try {
     const itemId = req.params.id;
     const updatedData = req.body; 
@@ -49,7 +49,7 @@ const putBase =  async (req, res) => {
   }
 }
 
-const deleteBase = async (req, res) => {
+export const deleteBase = async (req, res) => {
   try {
     const itemId = req.params.id;
     await db.collection("AS").doc(itemId).delete();
@@ -57,12 +57,4 @@ const deleteBase = async (req, res) => {
   } catch (error) {
     res.status(500).send(error.message);
   }
-}
-
-module.exports = {
-  getAllBase,
-  getBaseId,
-  postBase,
-  putBase,
-  deleteBase,
 }

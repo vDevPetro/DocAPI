@@ -1,9 +1,11 @@
 import express from 'express';
-import {getAllBase,
+import {
+  getAllBase,
   getBaseId,
   postBase,
   putBase,
-  deleteBase,} from '../controllers/base';
+  deleteBase
+} from '../controllers/base.js';
 
 const router = express.Router();
 
@@ -19,4 +21,4 @@ router.put('/:id', putBase);
 // DELETE https://apisiproj.vercel.app/as/:id
 router.delete('/:id', deleteBase);
 
-module.exports = router;
+export default router;
