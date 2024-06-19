@@ -29,10 +29,21 @@ export const getBaseId = async (req, res) => {
 }
 
 export const postBase = async (req, res) => {
+  const id = req.body.id
   try {
-    const newItem = req.body; 
-    const docRef = await db.collection("AS").add(newItem);
-    res.status(201).json({ id: docRef.id });
+    const newItem = {
+      contrato_icj: req.body.contratoIcj,
+      contrato_sap: req.body.contratoSap,
+      desc_projeto: req.body.descProjeto,
+      pep: req.body.pep,
+      porte: req.body.porte,
+      resp_petro: req.body.respPetro,
+      resp_contr: req.body.respContr,
+      tipo: req.body.tipo,
+      unidade: req.body.unidade
+    }
+    const docRef = await db.collection("AS").doc(id).set(newItem);
+    res.status(201).send({ id: docRef.id });
   } catch (error) {
     res.status(500).send(error.message);
   }
