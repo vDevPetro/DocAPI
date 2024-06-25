@@ -1,0 +1,51 @@
+[
+  {
+    "id": "ana@clara.com",
+    "profilePhoto": "",
+    "stamp": "18/06/2024",
+    "nivel": "ADMINISTRADOR",
+    "email": "ana@clara.com",
+    "uid": "WEsmGhzpk2cP0G6ZLNlbmp2GJ3q2",
+    "nome": "Ana Clara",
+    "status": "ATIVO"
+  },
+  {
+    "id": "matheus@santos.com",
+    "uid": "PENDENTE",
+    "profilePhoto": "",
+    "stamp": "20/06/2024",
+    "nome": "",
+    "nivel": "ADMINISTRADOR",
+    "email": "matheus@santos.com",
+    "status": "CADASTRADO"
+  },
+  {
+    "id": "victor@hugo.com",
+    "stamp": "26/04/2024",
+    "nome": "Victor Hugo",
+    "nivel": "ADMINISTRADOR",
+    "email": "victor@hugo.com",
+    "status": "ATIVO",
+    "uid": "ekSPz0vQwFVI6SeyvLQHo3WfRy52"
+  },
+  {
+    "id": "victor@lima.com",
+    "profilePhoto": "",
+    "stamp": "18/06/2024",
+    "nivel": "CLIENTE",
+    "email": "victor@lima.com",
+    "uid": "vfj5zOyQRgWv120qLu9sbOdPzqP2",
+    "nome": "Victor",
+    "status": "ATIVO"
+  },
+  {
+    "id": "victor@victor.com",
+    "profilePhoto": "",
+    "stamp": "18/06/2024",
+    "nivel": "OPERACIONAL",
+    "email": "victor@victor.com",
+    "uid": "CRb8BXKrdqXPD6gjLpCntBPxrYU2",
+    "nome": "Victor",
+    "status": "ATIVO"
+  }
+]
