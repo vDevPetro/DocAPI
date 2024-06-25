@@ -2,8 +2,6 @@
 import db from '../firebase.js';
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
 
 /* //Descomentar para rodar localhost
 export const exportUsersToJson = async () => {
@@ -22,9 +20,6 @@ export const exportUsersToJson = async () => {
   }
 }; */
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 export const exportUsersToJson = async () => {
   try {
     const snapshot = await db.collection('USUARIOS').get();
@@ -33,16 +28,13 @@ export const exportUsersToJson = async () => {
       ...doc.data()
     }));
 
-    // Define o caminho absoluto para o arquivo no diretório /tmp
     const dirPath = path.resolve('/tmp');
     const filePath = path.resolve(dirPath, 'users.json');
 
-    // Verifica se o diretório /tmp existe, se não, cria-o
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, { recursive: true });
     }
 
-    // Escreve o arquivo JSON no sistema de arquivos
     fs.writeFileSync(filePath, JSON.stringify(users, null, 2));
     console.log('Arquivo atualizado.');
     return true;

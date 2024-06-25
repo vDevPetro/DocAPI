@@ -2,6 +2,7 @@ import express from 'express';
 import base from './routes/base.js';
 import cors from 'cors';
 import users from './routes/users.js';
+import { exportUsersToJson } from './controllers/users.js';
 
 // REST API
 const app = express();
@@ -30,10 +31,13 @@ const corsOptions = {
     allowedHeaders: 'Content-Type,Authorization',
     credentials: true
 };
+app.use(cors(corsOptions));
 
 app.use('/as', base);
+
 app.use('/users', users)
-app.use(cors(corsOptions));
+
+exportUsersToJson();
 
 app.listen(3000);
 
