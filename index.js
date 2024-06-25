@@ -1,6 +1,7 @@
 import express from 'express';
 import base from './routes/base.js';
 import cors from 'cors';
+import users from './routes/users.js';
 
 // REST API
 const app = express();
@@ -30,9 +31,9 @@ const corsOptions = {
     credentials: true
 };
 
-app.use(cors(corsOptions));
-
 app.use('/as', base);
+app.use('/users', users)
+app.use(cors(corsOptions));
 
 app.listen(3000);
 
