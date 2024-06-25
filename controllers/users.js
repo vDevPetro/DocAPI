@@ -54,7 +54,9 @@ export const exportUsersToJson = async () => {
 
 export const getAllUsers = () => {
   try {
-    const data = fs.readFileSync('./data/users.json', 'utf8');
+    const filePath = path.resolve('/tmp', 'users.json');
+
+    const data = fs.readFileSync(filePath, 'utf8');
     return JSON.parse(data);
   } catch (error) {
     console.error('Erro ao carregar usuários:', error);
@@ -64,7 +66,9 @@ export const getAllUsers = () => {
 
 export const getUserById = (userId) => {
   try {
-    const data = fs.readFileSync('./data/users.json', 'utf8');
+    const filePath = path.resolve('/tmp', 'users.json');
+
+    const data = fs.readFileSync(filePath, 'utf8');
     const users = JSON.parse(data);
     return users.find(user => user.id === userId);
   } catch (error) {
