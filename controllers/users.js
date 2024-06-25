@@ -33,11 +33,11 @@ export const exportUsersToJson = async () => {
       ...doc.data()
     }));
 
-    // Define o caminho absoluto para o arquivo
-    const dirPath = path.resolve(__dirname, './data');
+    // Define o caminho absoluto para o arquivo no diretório /tmp
+    const dirPath = path.resolve('/tmp');
     const filePath = path.resolve(dirPath, 'users.json');
 
-    // Verifica se o diretório existe, se não, cria-o
+    // Verifica se o diretório /tmp existe, se não, cria-o
     if (!fs.existsSync(dirPath)) {
       fs.mkdirSync(dirPath, { recursive: true });
     }
