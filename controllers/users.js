@@ -1,7 +1,11 @@
 
 import db from '../firebase.js';
-import * as fs from 'fs';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
+/* //Descomentar para rodar localhost
 export const exportUsersToJson = async () => {
   try {
     const snapshot = await db.collection('USUARIOS').get();
@@ -10,6 +14,36 @@ export const exportUsersToJson = async () => {
       ...doc.data()
     }));
     fs.writeFileSync('./data/users.json', JSON.stringify(users, null, 2));
+    console.log('Arquivo atualizado.');
+    return true;
+  } catch (error) {
+    console.error('Erro ao exportar os usuários:', error);
+    return false;
+  }
+}; */
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export const exportUsersToJson = async () => {
+  try {
+    const snapshot = await db.collection('USUARIOS').get();
+    const users = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    // Define o caminho absoluto para o arquivo
+    const dirPath = path.resolve(__dirname, './data');
+    const filePath = path.resolve(dirPath, 'users.json');
+
+    // Verifica se o diretório existe, se não, cria-o
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath, { recursive: true });
+    }
+
+    // Escreve o arquivo JSON no sistema de arquivos
+    fs.writeFileSync(filePath, JSON.stringify(users, null, 2));
     console.log('Arquivo atualizado.');
     return true;
   } catch (error) {
