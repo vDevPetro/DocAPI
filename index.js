@@ -34,7 +34,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use('/as', base);
-
 app.use('/users', users)
 
 exportUsersToJson();
