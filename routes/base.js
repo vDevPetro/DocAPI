@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  getNextAvailableId,
   getAllBase,
   getBaseId,
   postBase,
@@ -10,6 +11,8 @@ import {
 const router = express.Router();
 
 // AS CRUD
+//GET ALL AVAIABLE IDS https://apisiproj.vercel.app/nextid
+router.get('/nextid', getNextAvailableId);
 // GET ALL https://apisiproj.vercel.app/as
 router.get('/', getAllBase);
 // GET https://apisiproj.vercel.app/as/:id
