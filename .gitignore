@@ -1,4 +1,7 @@
 
+#data
+./data/users.json
+
 # dotenv environment variables file
 .env
 .env.local

@@ -1,7 +1,9 @@
 
 import db from '../firebase.js';
-import * as fs from 'fs';
+import fs from 'fs';
+import path from 'path';
 
+/* //Descomentar para rodar localhost
 export const exportUsersToJson = async () => {
   try {
     const snapshot = await db.collection('USUARIOS').get();
@@ -16,11 +18,38 @@ export const exportUsersToJson = async () => {
     console.error('Erro ao exportar os usuários:', error);
     return false;
   }
+}; */
+
+export const exportUsersToJson = async () => {
+  try {
+    const snapshot = await db.collection('USUARIOS').get();
+    const users = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+
+    const dirPath = path.resolve('/tmp');
+    const filePath = path.resolve(dirPath, 'users.json');
+
+    if (!fs.existsSync(dirPath)) {
+      fs.mkdirSync(dirPath, { recursive: true });
+    }
+
+    fs.writeFileSync(filePath, JSON.stringify(users, null, 2));
+    console.log('Arquivo atualizado.');
+    return true;
+  } catch (error) {
+    console.error('Erro ao exportar os usuários:', error);
+    return false;
+  }
 };
 
 export const getAllUsers = () => {
   try {
     const data = fs.readFileSync('./data/users.json', 'utf8');
+    const filePath = path.resolve('/tmp', 'users.json');
+
+    const data = fs.readFileSync(filePath, 'utf8');
     return JSON.parse(data);
   } catch (error) {
     console.error('Erro ao carregar usuários:', error);
@@ -31,6 +60,9 @@ export const getAllUsers = () => {
 export const getUserById = (userId) => {
   try {
     const data = fs.readFileSync('./data/users.json', 'utf8');
+    const filePath = path.resolve('/tmp', 'users.json');
+
+    const data = fs.readFileSync(filePath, 'utf8');
     const users = JSON.parse(data);
     return users.find(user => user.id === userId);
   } catch (error) {
