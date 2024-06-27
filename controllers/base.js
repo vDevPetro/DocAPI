@@ -1,5 +1,19 @@
 import db from '../firebase.js'; 
 
+export const getNextAvailableId = async (req, res) => {
+  try {
+    const snapshot = await db.collection('AS').get();
+    const existingIds = snapshot.docs.map(doc => doc.id);
+    let nextId = 1;
+    while (existingIds.includes(nextId.toString())) {
+      nextId++;
+    }
+    res.json({ nextId });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
 export const getAllBase = async (req, res) => {
   try {
       const snapshot = await db.collection('AS').get();
@@ -29,8 +43,11 @@ export const getBaseId = async (req, res) => {
 }
 
 export const postBase = async (req, res) => {
-  const id = req.body.id
   try {
+    const nextIdResponse = await getNextAvailableId();
+    const nextId = nextIdResponse.nextId;
+    const docRef = db.collection('AS').doc(nextId.toString());
+
     const newItem = {
       contrato_icj: req.body.contratoIcj,
       contrato_sap: req.body.contratoSap,
@@ -41,9 +58,18 @@ export const postBase = async (req, res) => {
       resp_contr: req.body.respContr,
       tipo: req.body.tipo,
       unidade: req.body.unidade
+    };
+
+    await docRef.set(newItem);
+
+    const updatedDocSnap = await docRef.get();
+
+    if (!updatedDocSnap.exists) {
+      res.status(500).json({ message: 'Erro, inserção não foi bem sucedida' });
+      return;
     }
-    const docRef = await db.collection("AS").doc(id).set(newItem);
-    res.status(201).send({ id: docRef.id });
+
+    res.status(201).json(updatedDocSnap.data());
   } catch (error) {
     res.status(500).send(error.message);
   }
