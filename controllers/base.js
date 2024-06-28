@@ -54,7 +54,7 @@ export const getBaseId = async (req, res) => {
         resp_petro: req.body.resp_petro,
         resp_contr: req.body.resp_contr
       }
-      const docRef = await db.collection("AS").doc(id).set(newItem);
+      const docRef = await db.collection("AS").doc(id.toString()).set(newItem);
       res.status(201).send({ id: docRef.id });
     } catch (error) {
       res.status(500).send(error.message);
