@@ -49,12 +49,10 @@ export const getBaseId = async (req, res) => {
         contrato_icj: req.body.contrato_icj,
         contrato_sap: req.body.contrato_sap,
         desc_projeto: req.body.desc_projeto,
-        pep: req.body.pep,
         porte: req.body.porte,
+        prioridade: req.body.prioridade,
         resp_petro: req.body.resp_petro,
-        resp_contr: req.body.resp_contr,
-        tipo: req.body.tipo,
-        unidade: req.body.unidade
+        resp_contr: req.body.resp_contr
       }
       const docRef = await db.collection("AS").doc(id).set(newItem);
       res.status(201).send({ id: docRef.id });
