@@ -4,15 +4,16 @@ import emissao from './routes/emissao.js';
 import cors from 'cors';
 import users from './routes/users.js';
 import { exportUsersToJson } from './controllers/users.js';
+import bodyParser from 'body-parser';
 
 // REST API
 const app = express();
 
 // Middleware para analisar o corpo das requisições application/x-www-form-urlencoded
-//app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // Middleware para analisar o corpo das requisições application/json
-//app.use(express.json());
+app.use(express.json());
 
 const allowedOrigins = ['http://localhost:3000', 'https://siproj.vercel.app'];
 
@@ -33,7 +34,7 @@ const corsOptions = {
     credentials: true
 };
 app.use(cors(corsOptions));
-
+app.use(bodyParser.json());
 app.use('/as', base);
 app.use('/users', users);
 app.use('/emissao', emissao);

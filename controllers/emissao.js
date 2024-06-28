@@ -12,7 +12,7 @@ export const postEmissao = async (req, res) => {
     await docRef.set(newItem);
     const updatedDocSnap = await docRef.get();
     if (!updatedDocSnap.exists) {
-      res.status(500).json({ message: 'Erro, inserção não foi bem sucedida' });
+      res.status(400).json({ message: 'Erro, inserção não foi bem sucedida' });
       return;
     }
     res.status(201).json(updatedDocSnap.data());

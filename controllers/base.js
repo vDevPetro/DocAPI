@@ -42,37 +42,25 @@ export const getBaseId = async (req, res) => {
   }
 }
 
-export const postBase = async (req, res) => {
-  try {
-    const nextIdResponse = await getNextAvailableId();
-    const nextId = nextIdResponse.nextId;
-    const docRef = db.collection('AS').doc(nextId.toString());
-
-    const newItem = {
-      contrato_icj: req.body.contratoIcj,
-      contrato_sap: req.body.contratoSap,
-      desc_projeto: req.body.descProjeto,
-      pep: req.body.pep,
-      porte: req.body.porte,
-      resp_petro: req.body.respPetro,
-      resp_contr: req.body.respContr,
-      tipo: req.body.tipo,
-      unidade: req.body.unidade
-    };
-
-    await docRef.set(newItem);
-
-    const updatedDocSnap = await docRef.get();
-
-    if (!updatedDocSnap.exists) {
-      res.status(500).json({ message: 'Erro, inserção não foi bem sucedida' });
-      return;
+  export const postBase = async (req, res) => {
+    const id = req.body.id
+    try {
+      const newItem = {
+        contrato_icj: req.body.contrato_icj,
+        contrato_sap: req.body.contrato_sap,
+        desc_projeto: req.body.desc_projeto,
+        pep: req.body.pep,
+        porte: req.body.porte,
+        resp_petro: req.body.resp_petro,
+        resp_contr: req.body.resp_contr,
+        tipo: req.body.tipo,
+        unidade: req.body.unidade
+      }
+      const docRef = await db.collection("AS").doc(id).set(newItem);
+      res.status(201).send({ id: docRef.id });
+    } catch (error) {
+      res.status(500).send(error.message);
     }
-
-    res.status(201).json(updatedDocSnap.data());
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
 }
 
 export const putBase =  async (req, res) => {
