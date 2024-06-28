@@ -2,7 +2,6 @@ import express from 'express';
 import base from './routes/base.js';
 import cors from 'cors';
 import users from './routes/users.js';
-import bodyParser from 'body-parser';
 import { exportUsersToJson } from './controllers/users.js';
 
 // REST API
@@ -33,7 +32,7 @@ const corsOptions = {
     credentials: true
 };
 app.use(cors(corsOptions));
-app.use(bodyParser.json());
+
 app.use('/as', base);
 app.use('/users', users)
 
