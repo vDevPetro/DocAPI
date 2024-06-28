@@ -1,5 +1,6 @@
 import express from 'express';
 import base from './routes/base.js';
+import emissao from './routes/emissao.js';
 import cors from 'cors';
 import users from './routes/users.js';
 import { exportUsersToJson } from './controllers/users.js';
