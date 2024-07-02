@@ -1,5 +1,18 @@
 import db from '../firebase.js'; 
 
+export const getAllEmissao = async (req, res) => {
+  try {
+    const snapshot = await db.collection('EMISSAO').get();
+    const itens = snapshot.docs.map(doc => ({
+      id: doc.id,
+     ...doc.data()
+    }));
+    res.json(itens);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
 export const postEmissao = async (req, res) => {
   try {
     const docRef = db.collection('EMISSAO').doc();
