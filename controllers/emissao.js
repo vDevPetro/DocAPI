@@ -13,6 +13,20 @@ export const getAllEmissao = async (req, res) => {
   }
 }
 
+export const getByIdEmissao = async (req, res) => {
+  try {
+    const docRef = await db.collection('EMISSAO').doc(req.params.id);
+    const docSnap = await docRef.get();
+    if (!docSnap.exists) {
+      res.status(404).json({ message: 'Emissão não encontrada' });
+      return;
+    }
+    res.json(docSnap.data());
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
 export const postEmissao = async (req, res) => {
   try {
     const docRef = db.collection('EMISSAO').doc();
