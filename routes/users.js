@@ -8,6 +8,7 @@ import{
 
 const router = express.Router();
 
+//USERS CRUD
 router.get('/export-users', async (req, res) => {
   const success = await exportUsersToJson();
   if (success) {
@@ -35,7 +36,7 @@ router.get('/:userId', (req, res) => {
 
 router.put('/:userId', (req, res) => {
   const userId = req.params.userId;
-  const newData = req.body; // Assume que os novos dados estão no corpo da requisição
+  const newData = req.body; 
   const success = adaptUserData(userId, newData);
   if (success) {
     res.status(200).json({ message: 'Dados do usuário atualizados com sucesso' });

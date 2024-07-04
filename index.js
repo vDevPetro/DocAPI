@@ -1,9 +1,10 @@
 import express from 'express';
 import base from './routes/base.js';
 import emissao from './routes/emissao.js';
-import cors from 'cors';
 import users from './routes/users.js';
+import comentarios from './routes/comentarios.js';
 import { exportUsersToJson } from './controllers/users.js';
+import cors from 'cors';
 import bodyParser from 'body-parser';
 
 // REST API
@@ -33,13 +34,18 @@ const corsOptions = {
     allowedHeaders: 'Content-Type,Authorization',
     credentials: true
 };
+
+//Rotas, utilizacao do cors e do bodyParser
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use('/as', base);
 app.use('/users', users);
 app.use('/emissao', emissao);
+app.use('/comentarios', comentarios);
 
+// Método para exportar todos os usuários para o Json
 exportUsersToJson();
 
+// Inicia a API na porta 3000
 app.listen(3000);
 
