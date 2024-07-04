@@ -1,5 +1,6 @@
-import db from '../firebase.js'; 
+import db from '../firebase.js';
 
+//Pegar proximo id disponível para AS
 export const getNextAvailableId = async (req, res) => {
   try {
     const snapshot = await db.collection('AS').get();
@@ -14,57 +15,61 @@ export const getNextAvailableId = async (req, res) => {
   }
 }
 
+// Pegar todas as AS 
 export const getAllBase = async (req, res) => {
   try {
-      const snapshot = await db.collection('AS').get();
-      const itens = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-      }));
-      res.json(itens);
+    const snapshot = await db.collection('AS').get();
+    const itens = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    res.json(itens);
   } catch (error) {
-      res.status(500).send(error.message);
-  }    
-}
-
-export const getBaseId = async (req, res) => {
-  try {
-      const docRef = db.collection('AS').doc(req.params.id);
-      const docSnap = await docRef.get();
-
-      if (!docSnap.exists) {
-          res.status(400).json({message: 'Documento não encontrado'})
-      }
-
-      res.json(docSnap.data());
-  } catch (error) {
-      res.status(500).send(error.message);
+    res.status(500).send(error.message);
   }
 }
 
-  export const postBase = async (req, res) => {
-    const id = req.body.id
-    try {
-      const newItem = {
-        contrato_icj: req.body.contrato_icj,
-        contrato_sap: req.body.contrato_sap,
-        desc_projeto: req.body.desc_projeto,
-        porte: req.body.porte,
-        prioridade: req.body.prioridade,
-        resp_petro: req.body.resp_petro,
-        resp_contr: req.body.resp_contr
-      }
-      const docRef = await db.collection("AS").doc(id.toString()).set(newItem);
-      res.status(201).send({ id: docRef.id });
-    } catch (error) {
-      res.status(500).send(error.message);
+//Pegar AS por id 
+export const getBaseId = async (req, res) => {
+  try {
+    const docRef = db.collection('AS').doc(req.params.id);
+    const docSnap = await docRef.get();
+
+    if (!docSnap.exists) {
+      res.status(400).json({ message: 'Documento não encontrado' })
     }
+
+    res.json(docSnap.data());
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 }
 
-export const putBase =  async (req, res) => {
+//Inserir nova AS
+export const postBase = async (req, res) => {
+  const id = req.body.id
+  try {
+    const newItem = {
+      contrato_icj: req.body.contrato_icj,
+      contrato_sap: req.body.contrato_sap,
+      desc_projeto: req.body.desc_projeto,
+      porte: req.body.porte,
+      prioridade: req.body.prioridade,
+      resp_petro: req.body.resp_petro,
+      resp_contr: req.body.resp_contr
+    }
+    const docRef = await db.collection("AS").doc(id.toString()).set(newItem);
+    res.status(201).send({ id: docRef.id });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
+//Atualizar AS por id
+export const putBase = async (req, res) => {
   try {
     const itemId = req.params.id;
-    const updatedData = req.body; 
+    const updatedData = req.body;
     await db.collection("AS").doc(itemId).set(updatedData, { merge: true });
     res.status(200).send("Item atualizado com sucesso");
   } catch (error) {
@@ -72,6 +77,7 @@ export const putBase =  async (req, res) => {
   }
 }
 
+//Excluir AS por id
 export const deleteBase = async (req, res) => {
   try {
     const itemId = req.params.id;

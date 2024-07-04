@@ -20,6 +20,7 @@ export const exportUsersToJson = async () => {
   }
 }; */
 
+//Acessar o banco de dados e exportar usuarios para um arquivo Json Local
 export const exportUsersToJson = async () => {
   try {
     const snapshot = await db.collection('USUARIOS').get();
@@ -44,6 +45,7 @@ export const exportUsersToJson = async () => {
   }
 };
 
+//Pegar todos os usuarios no arquivo Json local
 export const getAllUsers = () => {
   try {
     const filePath = path.resolve('/tmp', 'users.json');
@@ -56,6 +58,7 @@ export const getAllUsers = () => {
   }
 };
 
+//Pegar um usuario pelo id no arquivo Json local
 export const getUserById = (userId) => {
   try {
     const filePath = path.resolve('/tmp', 'users.json');
@@ -69,6 +72,7 @@ export const getUserById = (userId) => {
   }
 };
 
+//Atualizar dados de um usuario através do id no arquivo Json local
 export const adaptUserData = (userId, newData) => {
   try {
     const data = fs.readFileSync('./data/users.json', 'utf8');
