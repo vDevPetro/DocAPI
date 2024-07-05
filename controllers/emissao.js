@@ -1,14 +1,27 @@
 import db from '../firebase.js'; 
 
-export const getByIdEmissao = async (req, res) => {
+//GET emissao por AS
+export const getByASEmissao = async (req, res) => {
   try {
-    const docRef = await db.collection('EMISSAO').doc(req.params.id);
-    const docSnap = await docRef.get();
-    if (!docSnap.exists) {
-      res.status(404).json({ message: 'Emissão não encontrada' });
-      return;
-    }
-    res.json(docSnap.data());
+    const num_as = req.params.num_as;
+    const docSnapshot = await db.collection('EMISSAO')
+     .where('num_as', '==', num_as)
+     .get();
+     if(docSnapshot.empty){
+      return res.status(404).json({error: `Nenhuma emissão associada com a AS: ${num_as}.`})
+     }
+     const emissoes = [];
+     docSnapshot.forEach((doc) => {
+      emissoes.push({
+        id: doc.id,
+        num_as: doc.data().num_as,
+        comentar_projeto_lb: doc.data().comentar_projeto_lb,
+        emissao: doc.data().emissao,
+        emitir_projeto_lb: doc.data().emitir_projeto_lb
+      });
+     });
+
+     res.status(200).json(emissoes);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -19,7 +32,7 @@ export const postEmissao = async (req, res) => {
   try {
     const docRef = db.collection('EMISSAO').doc();
     const newItem = {
-      as: req.body.as,
+      num_as: req.body.num_as,
       emissao: req.body.emissao,
       emitir_projeto_lb: req.body.emitir_projeto_lb,
       comentar_projeto_lb: req.body.comentar_projeto_lb
