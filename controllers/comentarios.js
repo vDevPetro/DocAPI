@@ -4,15 +4,15 @@ import db from '../firebase.js';
 export const getComentarioAS = async (req, res) => {
   try {
     const num_as = req.params.num_as;
-    const docSnapshot = await db.collection('COMENTARIOS')
+    const docSnap = await db.collection('COMENTARIOS')
       .where('num_as', '==', num_as)
       .get();
-    if (docSnapshot.empty) {
+    if (docSnap.empty) {
       return res.status(404).json({ error: `Nenhum comentário associado com a AS: ${num_as}.` });
     }
     const comentarios = [];
 
-    docSnapshot.forEach((doc) => {
+    docSnap.forEach((doc) => {
       comentarios.push({
         id: doc.id,
         comentario: doc.data().comentario,
