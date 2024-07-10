@@ -3,13 +3,13 @@ import db from '../firebase.js';
 //Pegar proximo id disponível para AS
 export const getNextAvailableId = async (req, res) => {
   try {
-    const snapshot = await db.collection('AS').get();
-    const existingIds = snapshot.docs.map(doc => doc.id);
+    const docSnap = await db.collection('AS').get();
+    const existingIds = docSnap.docs.map(doc => doc.id);
     let nextId = 1;
     while (existingIds.includes(nextId.toString())) {
       nextId++;
     }
-    res.json({ nextId });
+    res.status(200).json({ nextId });
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -18,12 +18,12 @@ export const getNextAvailableId = async (req, res) => {
 // Pegar todas as AS 
 export const getAllBase = async (req, res) => {
   try {
-    const snapshot = await db.collection('AS').get();
-    const itens = snapshot.docs.map(doc => ({
+    const docSnap = await db.collection('AS').get();
+    const itens = docSnap.docs.map(doc => ({
       id: doc.id,
       ...doc.data()
     }));
-    res.json(itens);
+    res.status(200).json(itens);
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -39,7 +39,7 @@ export const getBaseId = async (req, res) => {
       res.status(400).json({ message: 'Documento não encontrado' })
     }
 
-    res.json(docSnap.data());
+    res.status(200).json(docSnap.data());
   } catch (error) {
     res.status(500).send(error.message);
   }

@@ -3,6 +3,7 @@ import base from './routes/base.js';
 import emissao from './routes/emissao.js';
 import users from './routes/users.js';
 import comentarios from './routes/comentarios.js';
+import cronograma from './routes/cronograma.js';
 import { exportUsersToJson } from './controllers/users.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -42,6 +43,7 @@ app.use('/as', base);
 app.use('/users', users);
 app.use('/emissao', emissao);
 app.use('/comentarios', comentarios);
+app.use('/cronograma', cronograma);
 
 // Método para exportar todos os usuários para o Json
 exportUsersToJson();
