@@ -48,3 +48,35 @@ export const postEmissao = async (req, res) => {
     res.status(500).send(error.message);
   }
 }
+
+//Atualizar Emissao
+export const putEmissao = async (req, res) => {
+  try{
+  const num_as = req.params.num_as;
+  const emissao = req.params.emissao;
+  const updateData = req.body;
+
+  const docSnap = await db.collection('EMISSAO')
+   .where('num_as', '==', num_as)
+   .where('emissao', '==', emissao)
+   .get();
+
+   if (docSnap.empty) {
+    const doc = await db.collection('EMISSAO').where('num_as', '==', num_as).get();
+    if (doc.empty) {
+      return res.status(404).json({ error: `Nenhuma emissão associada com a AS: ${num_as}.` });
+    } else {
+      return res.status(404).json({ error: `Nenhuma emissão de número: ${emissao} associada à AS: ${num_as}.` });
+    }
+  }
+
+  const docEmissao = docSnap.docs[0];
+  const emissaoId = docEmissao.id;
+  await db.collection('EMISSAO'). doc(emissaoId).update(updateData);
+  const updateDoc = await db.collection('EMISSAO').doc(emissaoId).get();
+
+  res.status(200).json(updateDoc.data());
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}

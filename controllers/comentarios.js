@@ -51,3 +51,38 @@ export const postComentario = async (req, res) => {
     res.status(500).send(error.message);
   }
 }
+
+//Atualizar Comentário por id 
+export const putComentario = async (req, res) => {
+  try {
+    const itemId = req.params.id;
+    const updatedData = req.body;
+    const doc = await db.collection('COMENTARIOS').doc(itemId).get();
+    
+    if (!doc.exists) {
+      return res.status(404).send("O ID solicitado não está relacionado com nenhum comentário.");
+    }
+
+    await db.collection('COMENTARIOS').doc(itemId).update(updatedData);
+    res.status(200).send("Comentário atualizado com sucesso");
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
+//Excluir Comentario por id
+export const deleteComentario = async (req, res) => {
+  try {
+    const itemId = req.params.id;
+    const doc = await db.collection('COMENTARIOS').doc(itemId).get();
+    
+    if (!doc.exists) {
+      return res.status(404).send("O ID solicitado não está relacionado com nenhum comentário.");
+    }
+
+    await db.collection('COMENTARIOS').doc(itemId).delete();
+    res.status(200).send("Comentário excluído com sucesso");
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}

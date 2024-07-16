@@ -62,6 +62,7 @@ export const postCronograma = async (req, res) => {
     const newItem = {
       num_as: req.body.num_as,
       emissao_et_petro_lb: req.body.emissao_et_petro_lb,
+      analise_et_lb: req.body.analise_et_lb,
       analise_et_na: req.body.analise_et_na,
       reuniao_pre_lb: req.body.reuniao_pre_lb,
       reuniao_pre_na: req.body.reuniao_pre_na,
