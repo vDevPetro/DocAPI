@@ -70,7 +70,13 @@ export const putBase = async (req, res) => {
   try {
     const itemId = req.params.id;
     const updatedData = req.body;
-    await db.collection("AS").doc(itemId).set(updatedData, { merge: true });
+    const doc = await db.collection("AS").doc(itemId).get();
+
+    if (!doc.exists) {
+      return res.status(404).send("O Id solicitado não está relacionado com nenhuma AS");
+    }
+
+    await db.collection("AS").doc(itemId).update(updatedData);
     res.status(200).send("Item atualizado com sucesso");
   } catch (error) {
     res.status(500).send(error.message);
@@ -81,6 +87,12 @@ export const putBase = async (req, res) => {
 export const deleteBase = async (req, res) => {
   try {
     const itemId = req.params.id;
+    const doc = await db.collection("AS").doc(itemId).get();
+
+    if (!doc.exists) {
+      return res.status(404).send("O Id solicitado não está relacionado com nenhuma AS");
+    }
+    
     await db.collection("AS").doc(itemId).delete();
     res.status(200).send("Item excluído com sucesso");
   } catch (error) {
