@@ -8,18 +8,13 @@ import { exportUsersToJson } from './controllers/users.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
-// REST API
-const app = express();
+const startServer = async () => {
+  // REST API
+  const app = express();
 
-// Middleware para analisar o corpo das requisições application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: true }));
+  const allowedOrigins = ['http://localhost:3000', 'https://siproj.vercel.app'];
 
-// Middleware para analisar o corpo das requisições application/json
-app.use(express.json());
-
-const allowedOrigins = ['http://localhost:3000', 'https://siproj.vercel.app'];
-
-const corsOptions = {
+  const corsOptions = {
     origin: (origin, callback) => {
       // Permitir requisições sem origem (por exemplo, em clientes como Postman)
       if (!origin) return callback(null, true);
@@ -34,20 +29,34 @@ const corsOptions = {
     methods: 'GET,POST,PUT,DELETE',
     allowedHeaders: 'Content-Type,Authorization',
     credentials: true
+  };
+
+  // Middlewares
+  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json());
+  app.use(cors(corsOptions));
+  app.use(bodyParser.json());
+
+  // Rotas da API
+  app.use('/as', base);
+  app.use('/users', users);
+  app.use('/emissao', emissao);
+  app.use('/comentarios', comentarios);
+  app.use('/cronograma', cronograma);
+
+  // Exportar todos os usuários para o JSON antes de iniciar o servidor
+  try {
+    await exportUsersToJson();
+    console.log('Exportação de usuários concluída.');
+  } catch (error) {
+    console.error('Erro ao exportar usuários:', error);
+  }
+
+  app.listen(3000, () => {
+    console.log('Servidor iniciado na porta 3000!');
+  });
 };
 
-//Rotas, utilizacao do cors e do bodyParser
-app.use(cors(corsOptions));
-app.use(bodyParser.json());
-app.use('/as', base);
-app.use('/users', users);
-app.use('/emissao', emissao);
-app.use('/comentarios', comentarios);
-app.use('/cronograma', cronograma);
+startServer();
 
-// Método para exportar todos os usuários para o Json
-exportUsersToJson();
-
-// Inicia a API na porta 3000
-app.listen(3000);
 

@@ -3,8 +3,10 @@ import{
   exportUsersToJson,
   getAllUsers,
   getUserById,
-  adaptUserData
+  adaptUserData,
+  getUsersByFunctions
 } from '../controllers/users.js';
+
 
 const router = express.Router();
 
@@ -17,6 +19,9 @@ router.get('/export-users', async (req, res) => {
     res.status(500).json({ error: 'Erro ao exportar usuários' });
   }
 });
+
+// Rota para retornar todas as funções e usuários associados
+router.get('/all-functions', getUsersByFunctions);
 
 router.get('/', (req, res) => {
   const users = getAllUsers();
@@ -44,5 +49,6 @@ router.put('/:userId', (req, res) => {
     res.status(500).json({ error: 'Erro ao atualizar dados do usuário' });
   }
 });
+
 
 export default router;
