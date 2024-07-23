@@ -63,6 +63,11 @@ export const getUserById = (userId) => {
   try {
     const filePath = path.resolve('/tmp', 'users.json');
 
+    if (!fs.existsSync(filePath)) {
+      console.error('Arquivo de usuários não encontrado:', filePath);
+      return null;
+    }
+
     const data = fs.readFileSync(filePath, 'utf8');
     const users = JSON.parse(data);
     return users.find(user => user.id === userId);
@@ -92,6 +97,22 @@ export const adaptUserData = (userId, newData) => {
   }
 };
 
+export const getUsersByFunctions = (req, res) => {
+  try {
+    const users = getAllUsers();
+    const functionsList = {
+      fiscais: users.filter(user => user.funcao === 'FISCAL').map(user => ({ nome: user.nome })),
+      resp_petro: users.filter(user => user.funcao === 'RESP_PETRO').map(user => ({ nome: user.nome })),
+      resp_proj: users.filter(user => user.funcao === 'RESP_PROJ').map(user => ({ nome: user.nome }))
+    };
+
+    res.json(functionsList);
+  } catch (error) {
+    console.error('Erro ao buscar usuários por funções:', error);
+    res.status(500).json({ error: 'Erro ao buscar usuários por funções' });
+    return null;
+  }
+};
 
 
 
