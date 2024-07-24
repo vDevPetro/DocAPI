@@ -44,8 +44,8 @@ export const getByAsCronograma = async (req, res) => {
         data_book_lb: doc.data().data_book_lb,
         prazo_lb: doc.data().prazo_lb,
         prazo_rp: doc.data().prazo_rp,
-        prazo_real: doc.data().prazo_real
-
+        prazo_real: doc.data().prazo_real,
+        url : doc.data().url
       });
     });
 
@@ -88,7 +88,8 @@ export const postCronograma = async (req, res) => {
       data_book_lb: req.body.data_book_lb,
       prazo_lb: req.body.prazo_lb,
       prazo_rp: req.body.prazo_rp,
-      prazo_real: req.body.prazo_real
+      prazo_real: req.body.prazo_real,
+      url : req.body.url
     };
     await docRef.set(newItem);
     const updatedDocSnap = await docRef.get();
@@ -117,13 +118,36 @@ export const putCronograma = async (req, res) => {
 
     const cronograma = docSnap.docs[0];
     const cronogramaId = cronograma.id;
-    await db.collection('CRONOGRAMA').doc(cronogramaId).set(updatedData, { merge: true });
-
+    await db.collection('CRONOGRAMA').doc(cronogramaId).update(updatedData);
     const updatedDoc = await db.collection('CRONOGRAMA').doc(cronogramaId).get();
+
     res.status(200).json(updatedDoc.data());
   } catch (error) {
     res.status(500).send(error.message);
   }
 };
 
+export const putUrlCronograma = async (req, res) => {
+  try {
+    const num_as = req.params.num_as;
+    const url = req.body.url; 
 
+    const docSnap = await db.collection('CRONOGRAMA')
+      .where('num_as', '==', num_as)
+      .get();
+
+    if (docSnap.empty) {
+      return res.status(404).json({ error: `Nenhum cronograma associado com a AS: ${num_as}.` });
+    }
+
+    const cronograma = docSnap.docs[0];
+    const cronogramaId = cronograma.id;
+
+    await db.collection('CRONOGRAMA').doc(cronogramaId).update({ url: url }); 
+    const updatedDoc = await db.collection('CRONOGRAMA').doc(cronogramaId).get();
+
+    res.status(200).json(updatedDoc.data());
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};

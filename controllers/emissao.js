@@ -72,7 +72,7 @@ export const putEmissao = async (req, res) => {
 
   const docEmissao = docSnap.docs[0];
   const emissaoId = docEmissao.id;
-  await db.collection('EMISSAO'). doc(emissaoId).update(updateData);
+  await db.collection('EMISSAO').doc(emissaoId).update(updateData);
   const updateDoc = await db.collection('EMISSAO').doc(emissaoId).get();
 
   res.status(200).json(updateDoc.data());
