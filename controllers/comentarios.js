@@ -19,7 +19,8 @@ export const getComentarioAS = async (req, res) => {
         user: doc.data().user,
         data_envio: doc.data().data_envio,
         num_as: doc.data().num_as,
-        perfil: doc.data().perfil
+        perfil: doc.data().perfil,
+        nome: doc.data().nome
       });
     });
 
@@ -38,7 +39,8 @@ export const postComentario = async (req, res) => {
       user: req.body.user,
       data_envio: req.body.data_envio,
       num_as: req.body.num_as,
-      perfil: req.body.perfil
+      perfil: req.body.perfil,
+      nome: req.body.nome
     };
     await docRef.set(newItem);
     const updatedDocSnap = await docRef.get();
