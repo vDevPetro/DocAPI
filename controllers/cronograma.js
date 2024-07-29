@@ -17,35 +17,7 @@ export const getByAsCronograma = async (req, res) => {
     docSnap.forEach((doc) => {
       cronograma.push({
         id: doc.id,
-        num_as: doc.data().num_as,
-        emissao_et_petro_lb: doc.data().emissao_et_petro_lb,
-        analise_et_na: doc.data().analise_et_na,
-        reuniao_pre_lb: doc.data().reuniao_pre_lb,
-        reuniao_pre_na: doc.data().reuniao_pre_na,
-        visita_ida_lb: doc.data().visita_ida_lb,
-        visita_ida_na: doc.data().visita_ida_na,
-        visita_volta_lb: doc.data().visita_volta_lb,
-        visita_volta_na: doc.data().visita_volta_na,
-        emitir_rl_visita_lb: doc.data().emitir_rl_visita_lb,
-        emitir_rl_visita_na: doc.data().emitir_rl_visita_na,
-        aprovar_rl_visita_lb: doc.data().aprovar_rl_visita_lb,
-        aprovar_rl_visita_na: doc.data().aprovar_rl_visita_na,
-        emitir_orc_lb: doc.data().emitir_orc_lb,
-        emitir_orc_rp: doc.data().emitir_orc_rp,
-        aprovar_orc_lb: doc.data().aprovar_orc_lb,
-        aprovar_orc_rp: doc.data().aprovar_orc_rp,
-        emitir_pep_lb: doc.data().emitir_pep_lb,
-        emitir_pep_rp: doc.data().emitir_pep_rp,
-        aprovar_pep_lb: doc.data().aprovar_pep_lb,
-        aprovar_pep_rp: doc.data().aprovar_pep_rp,
-        emitir_projeto_lb: doc.data().emitir_projeto_lb,
-        comentar_projeto_lb: doc.data().comentar_projeto_lb,
-        atender_coment_projeto_lb: doc.data().atender_coment_projeto_lb,
-        data_book_lb: doc.data().data_book_lb,
-        prazo_lb: doc.data().prazo_lb,
-        prazo_rp: doc.data().prazo_rp,
-        prazo_real: doc.data().prazo_real,
-        url : doc.data().url
+        ...doc.data()
       });
     });
 
