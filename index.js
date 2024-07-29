@@ -4,6 +4,7 @@ import emissao from './routes/emissao.js';
 import users from './routes/users.js';
 import comentarios from './routes/comentarios.js';
 import cronograma from './routes/cronograma.js';
+import indicadores from './routes/indicadores.js';
 import { exportUsersToJson } from './controllers/users.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -43,6 +44,7 @@ const startServer = async () => {
   app.use('/emissao', emissao);
   app.use('/comentarios', comentarios);
   app.use('/cronograma', cronograma);
+  app.use('/indicadores', indicadores);
 
   // Exportar todos os usuários para o JSON antes de iniciar o servidor
   try {
