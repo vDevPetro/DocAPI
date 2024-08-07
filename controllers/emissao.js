@@ -34,8 +34,8 @@ export const postEmissao = async (req, res) => {
     const newItem = {
       num_as: req.body.num_as,
       emissao: req.body.emissao,
-      emitir_projeto_lb: req.body.emitir_projeto_lb,
-      comentar_projeto_lb: req.body.comentar_projeto_lb
+      emitir_proj_lb: req.body.emitir_proj_lb,
+      coment_proj_lb: req.body.coment_proj_lb
     };
     await docRef.set(newItem);
     const updatedDocSnap = await docRef.get();
