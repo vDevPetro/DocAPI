@@ -48,7 +48,7 @@ export const postEmissao = async (req, res) => {
       num_as: req.body.num_as,
       emissao: req.body.emissao,
       motivo: req.body.motivo,
-      desc_emissao: req.body.desc_emissao,
+      desc_motivo: req.body.desc_motivo,
       emitir_proj_lb: req.body.emitir_proj_lb,
       emitir_proj_rp: req.body.emitir_proj_rp,
       emitir_proj_real: req.body.emitir_proj_real,
