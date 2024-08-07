@@ -15,9 +15,22 @@ export const getByASEmissao = async (req, res) => {
       emissoes.push({
         id: doc.id,
         num_as: doc.data().num_as,
-        comentar_projeto_lb: doc.data().comentar_projeto_lb,
         emissao: doc.data().emissao,
-        emitir_projeto_lb: doc.data().emitir_projeto_lb
+        motivo: doc.data().motivo,
+        desc_motivo: doc.data().desc_motivo,
+        coment_proj_lb: doc.data().coment_proj_lb,
+        coment_proj_rp: doc.data().coment_pro_rp,
+        coment_proj_real: doc.data().coment_proj_real,
+        emitir_proj_lb: doc.data().emitir_proj_lb,
+        emitir_proj_rp: doc.data().emitir_proj_rp,
+        emitir_proj_real: doc.data().emitir_proj_real,
+        atender_coment_proj_lb: doc.data().atender_coment_proj_lb,
+        atender_coment_proj_rp: doc.data().atender_coment_proj_rp,
+        atender_coment_proj_real: doc.data().atender_coment_proj_real,
+        flag_aprov_coment: doc.data().flag_aprov_coment,
+        flag_reprov: doc.data().flag_reprov,
+        justificativa: doc.data().justificativa,
+        log: doc.data().log
       });
      });
 
@@ -34,8 +47,22 @@ export const postEmissao = async (req, res) => {
     const newItem = {
       num_as: req.body.num_as,
       emissao: req.body.emissao,
+      motivo: req.body.motivo,
+      desc_emissao: req.body.desc_emissao,
       emitir_proj_lb: req.body.emitir_proj_lb,
-      coment_proj_lb: req.body.coment_proj_lb
+      emitir_proj_rp: req.body.emitir_proj_rp,
+      emitir_proj_real: req.body.emitir_proj_real,
+      coment_proj_lb: req.body.coment_proj_lb,
+      coment_proj_rp: req.body.coment_proj_rp,
+      coment_proj_real: req.body.coment_proj_real,
+      atender_coment_proj_lb: req.body.atender_coment_proj_lb,
+      atender_coment_proj_rp: req.body.atender_coment_proj_rp,
+      atender_coment_proj_real: req.body.atender_coment_proj_real,
+      flag_aprov: req.body.flag_aprov,
+      flag_aprov_coment: req.body.flag_aprov_coment,
+      flag_reprov: req.body.flag_reprov,
+      justificativa: req.body.justificativa,
+      log: req.body.log
     };
     await docRef.set(newItem);
     const updatedDocSnap = await docRef.get();
