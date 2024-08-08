@@ -59,7 +59,7 @@ export const getAllUsers = () => {
 };
 
 //criar users para ser usado no vba
-export const postUser = async () => {
+export const postUser = async (req, res) => {
   const id = req.body.email;
   try {
     const newItem = req.body;
