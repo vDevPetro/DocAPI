@@ -58,6 +58,18 @@ export const getAllUsers = () => {
   }
 };
 
+//criar users para ser usado no vba
+export const postUser = async () => {
+  const id = req.body.email;
+  try {
+    const newItem = req.body;
+    const docRef = await db.collection("USUARIOS").doc(id.toString()).set(newItem);
+    res.status(201).send({ id: docRef.id })
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
+
 //Pegar um usuario pelo id no arquivo Json local
 export const getUserById = (userId) => {
   try {

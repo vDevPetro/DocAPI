@@ -4,7 +4,8 @@ import{
   getAllUsers,
   getUserById,
   adaptUserData,
-  getUsersByFunctions
+  getUsersByFunctions,
+  postUser
 } from '../controllers/users.js';
 
 
@@ -28,6 +29,7 @@ router.get('/', (req, res) => {
   res.status(200).json(users);
 });
 
+router.post('/', postUser);
 
 router.get('/:userId', (req, res) => {
   const userId = req.params.userId;
