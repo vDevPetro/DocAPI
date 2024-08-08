@@ -27,8 +27,7 @@ export const getByASEmissao = async (req, res) => {
         atender_coment_proj_lb: doc.data().atender_coment_proj_lb,
         atender_coment_proj_rp: doc.data().atender_coment_proj_rp,
         atender_coment_proj_real: doc.data().atender_coment_proj_real,
-        flag_aprov_coment: doc.data().flag_aprov_coment,
-        flag_reprov: doc.data().flag_reprov,
+        situacao: doc.data().situacao,
         justificativa: doc.data().justificativa,
         log: doc.data().log
       });
@@ -58,9 +57,7 @@ export const postEmissao = async (req, res) => {
       atender_coment_proj_lb: req.body.atender_coment_proj_lb,
       atender_coment_proj_rp: req.body.atender_coment_proj_rp,
       atender_coment_proj_real: req.body.atender_coment_proj_real,
-      flag_aprov: req.body.flag_aprov,
-      flag_aprov_coment: req.body.flag_aprov_coment,
-      flag_reprov: req.body.flag_reprov,
+      situacao: req.body.situacao,
       justificativa: req.body.justificativa,
       log: req.body.log
     };
