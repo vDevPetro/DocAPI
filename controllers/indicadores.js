@@ -37,7 +37,7 @@ export const getIndicadorById = async (req, res) => {
 
 export const updateCurvaS = async (req, res) => {
   try {
-    const as = req.body.num_as;
+    const as = req.params.num_as;
     const updatedData = req.body;
     const doc = await db.collection("INDICADORES").doc(as).get();
 
