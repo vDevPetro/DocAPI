@@ -37,16 +37,16 @@ export const getIndicadorById = async (req, res) => {
 
 export const updateCurvaS = async (req, res) => {
   try {
-    const as = req.params.num_as;
+    const itemId = req.params.id;
     const updatedData = req.body;
-    const doc = await db.collection("INDICADORES").doc(as).get();
+    const doc = await db.collection("INDICADORES").doc(itemId).get();
 
     if (!doc.exists) {
-      await db.collection("INDICADORES").doc(as).set(updatedData);
-      res.status(201).send("Dados curva s inseridos");
+      const snap = await db.collection("INDICADORES").doc(itemId).set(updatedData);
+      res.status(201).send("Dados curva s inseridos", snap);
     } else {
-      await db.collection("INDICADORES").doc(as).update(updatedData);
-      res.status(200).send("Dados curva s atualizados");
+      const snap = await db.collection("INDICADORES").doc(itemId).update(updatedData);
+      res.status(200).send("Dados curva s atualizados", snap);
     }
   } catch (error) {
     res.status(500).send(error.message);
