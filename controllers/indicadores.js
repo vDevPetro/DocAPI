@@ -52,3 +52,18 @@ export const updateCurvaS = async (req, res) => {
     res.status(500).send(error.message);
   }
 }
+
+export const getCurvaS = async (req, res) => {
+  try {
+    const docRef = db.collection("INDICADORES").doc(req.params.id);
+    const docSnap = await docRef.get();
+
+    if (!docSnap.exists) {
+      res.status(400).json("Documento não encontrado");
+    }
+
+    res.status(200).json(docSnap.data());
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
