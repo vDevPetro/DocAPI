@@ -42,11 +42,11 @@ export const updateCurvaS = async (req, res) => {
     const doc = await db.collection("INDICADORES").doc(itemId).get();
 
     if (!doc.exists) {
-      const snap = await db.collection("INDICADORES").doc(itemId).set(updatedData);
-      res.status(201).send("Dados curva s inseridos", snap);
+      await db.collection("INDICADORES").doc(itemId.toString()).set(updatedData);
+      res.status(201).send("Dados curva s inseridos");
     } else {
-      const snap = await db.collection("INDICADORES").doc(itemId).update(updatedData);
-      res.status(200).send("Dados curva s atualizados", snap);
+      await db.collection("INDICADORES").doc(itemId.toString()).update(updatedData);
+      res.status(200).send("Dados curva s atualizados");
     }
   } catch (error) {
     res.status(500).send(error.message);

@@ -10,6 +10,6 @@ const router = express.Router();
 // GET https://apisiproj.vercel.app/indicadores/:id
 router.get('/:id', getIndicadorById);
 
-router.put('/curvas/:id', updateCurvaS);
+router.put('/:id', updateCurvaS);
 
 export default router;
