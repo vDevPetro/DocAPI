@@ -34,3 +34,21 @@ export const getIndicadorById = async (req, res) => {
     res.status(500).send(error.message);
   }
 }
+
+export const updateCurvaS = async (req, res) => {
+  try {
+    const as = req.body.num_as;
+    const updatedData = req.body;
+    const doc = await db.collection("INDICADORES").doc(as).get();
+
+    if (!doc.exists) {
+      await db.collection("INDICADORES").doc(as).set(updatedData);
+      res.status(201).send("Dados curva s inseridos");
+    } else {
+      await db.collection("INDICADORES").doc(as).update(updatedData);
+      res.status(200).send("Dados curva s atualizados");
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
