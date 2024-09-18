@@ -1,5 +1,18 @@
 import db from '../firebase.js';
 
+//Pegar todos os cronogramas
+export const getAllCronograma = async (req, res) => {
+  try {
+    const docSnap = await db.collection('CRONOGRAMA').get();
+    const itens = docSnap.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    }));
+    res.status(200).json(itens);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+}
 //Pegar todos os cronogramas por AS
 export const getByAsCronograma = async (req, res) => {
   try {
