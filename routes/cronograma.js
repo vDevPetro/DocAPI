@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  getAllCronograma,
   getByAsCronograma,
   postCronograma,
   putCronograma,
@@ -9,6 +10,8 @@ import {
 const router = express.Router();
 
 // CRONOGRAMA CRUD
+//GET ALL https://apisiproj.vercel.app/cronograma
+router.get('/', getAllCronograma);
 //GET  https://apisiproj.vercel.app/cronograma/:num_as
 router.get('/:num_as', getByAsCronograma);
 //POST https://apisiproj.vercel.app/cronograma
