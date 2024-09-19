@@ -8,6 +8,13 @@ import indicadores from './routes/indicadores.js';
 import { exportUsersToJson } from './controllers/users.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import * as dotenv from 'dotenv';
+
+// Carrega as variáveis de ambiente do arquivo .env.local
+dotenv.config({ path: '.env.local' });
+
+// Atribui chave a constante
+const API_KEY = process.env.API_KEY;
 
 const startServer = async () => {
   // REST API
@@ -32,11 +39,25 @@ const startServer = async () => {
     credentials: true
   };
 
+  // Middleware para CORS
+  app.use(cors(corsOptions));
+
+  // Configurar e validar API Key
+  const checkApiKey = (req, res, next) => {
+    const apiKey = req.headers['authorization'];
+    //Verificar se a chave existe e é igual a passada
+    if (apiKey && apiKey === API_KEY) {
+      next();
+    } else {
+      res.status(401).json({ error: 'Chave API ausente ou inválida' });
+    }
+  };
+
   // Middlewares
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
-  app.use(cors(corsOptions));
   app.use(bodyParser.json());
+  app.use(checkApiKey);
 
   // Rotas da API
   app.use('/as', base);
@@ -60,5 +81,3 @@ const startServer = async () => {
 };
 
 startServer();
-
-
