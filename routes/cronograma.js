@@ -3,8 +3,7 @@ import {
   getAllCronograma,
   getByAsCronograma,
   postCronograma,
-  putCronograma,
-  putUrlCronograma
+  putCronograma
 } from '../controllers/cronograma.js';
 
 const router = express.Router();
@@ -18,8 +17,5 @@ router.get('/:num_as', getByAsCronograma);
 router.post('/', postCronograma);
 //PUT https://apisiproj.vercel.app/cronograma/:num_as
 router.put('/:num_as', putCronograma);
-// PUT https://apisiproj.vercel.app/cronograma/:num_as/url
-router.put('/:num_as/url', putUrlCronograma);
-
 
 export default router;
