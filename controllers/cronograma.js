@@ -81,27 +81,3 @@ export const putCronograma = async (req, res) => {
   }
 };
 
-export const putUrlCronograma = async (req, res) => {
-  try {
-    const num_as = req.params.num_as;
-    const url = req.body.url; 
-
-    const docSnap = await db.collection('CRONOGRAMA')
-      .where('num_as', '==', num_as)
-      .get();
-
-    if (docSnap.empty) {
-      return res.status(404).json({ error: `Nenhum cronograma associado com a AS: ${num_as}.` });
-    }
-
-    const cronograma = docSnap.docs[0];
-    const cronogramaId = cronograma.id;
-
-    await db.collection('CRONOGRAMA').doc(cronogramaId).update({ url: url }); 
-    const updatedDoc = await db.collection('CRONOGRAMA').doc(cronogramaId).get();
-
-    res.status(200).json(updatedDoc.data());
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-};
