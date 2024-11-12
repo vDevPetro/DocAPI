@@ -72,7 +72,6 @@ export const putCronograma = async (req, res) => {
 
     const cronograma = docSnap.docs[0];
     const cronogramaId = cronograma.id;
-    await db.collection('CRONOGRAMA').doc(cronogramaId).update(updatedData);
 
     const now = new Date();
     const updateTime = `Atualizado no dia ${now.toLocaleDateString('pt-BR')} às ${now.toLocaleTimeString('pt-BR', {
@@ -81,10 +80,12 @@ export const putCronograma = async (req, res) => {
       hour12: false
     })}`;
 
-    console.log(`Cronograma AS: ${num_as} - ${updateTime}`);
+    updatedData.atualizacao = updateTime;
+    await db.collection('CRONOGRAMA').doc(cronogramaId).update(updatedData);
+
     const updatedDoc = await db.collection('CRONOGRAMA').doc(cronogramaId).get();
 
-    res.status(200).json({...updatedDoc.data(), lastUpdate: updateTime});
+    res.status(200).json(updatedDoc.data());
   } catch (error) {
     res.status(500).send(error.message);
   }
