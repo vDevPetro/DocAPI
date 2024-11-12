@@ -80,7 +80,7 @@ export const putCronograma = async (req, res) => {
       hour12: false
     })}`;
 
-    updatedData.lastUpdate = updateTime;
+    updatedData.atualizacao = updateTime;
     await db.collection('CRONOGRAMA').doc(cronogramaId).update(updatedData);
 
     const updatedDoc = await db.collection('CRONOGRAMA').doc(cronogramaId).get();
