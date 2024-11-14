@@ -67,3 +67,23 @@ export const getCurvaS = async (req, res) => {
     res.status(500).send(error.message);
   }
 }
+
+export const getAllCurvasS = async (req, res) => {
+  try {
+    const indicadoresSnap = await db.collection("INDICADORES").get();
+    
+    if (indicadoresSnap.empty) {
+      return res.status(404).json({ message: "Nenhum indicador encontrado" });
+    }
+
+    const indicadores = indicadoresSnap.docs.map(doc => ({
+      id: doc.id,
+      num_as: doc.data().num_as,
+      data: doc.data().data 
+    }));
+
+    res.status(200).json(indicadores);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
