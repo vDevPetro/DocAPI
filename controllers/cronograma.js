@@ -74,11 +74,23 @@ export const putCronograma = async (req, res) => {
     const cronogramaId = cronograma.id;
 
     const now = new Date();
-    const updateTime = `Atualizado no dia ${now.toLocaleDateString('pt-BR')} às ${now.toLocaleTimeString('pt-BR', {
+    const timeZone = 'America/Sao_Paulo';
+
+    const date = new Intl.DateTimeFormat('pt-BR',{ 
+      timeZone,
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    }).format(now);
+
+    const time = new Intl.DateTimeFormat('pt-BR', {
+      timeZone,
       hour: '2-digit',
       minute: '2-digit',
-      hour12: false
-    })}`;
+      hour12: false,
+    }).format(now);
+
+    const updateTime = `Atualizado no dia ${date} às ${time}`;
 
     updatedData.atualizacao = updateTime;
     await db.collection('CRONOGRAMA').doc(cronogramaId).update(updatedData);
