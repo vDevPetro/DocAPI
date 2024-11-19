@@ -26,7 +26,7 @@ export const getAllLogs = async (req, res) => {
       const data = doc.data();
       return {
         num_as: data.num_as,
-        log: data.log || 'Log não disponível' 
+        log: data.atualizacao || 'Log não disponível'
       };
     });
 
