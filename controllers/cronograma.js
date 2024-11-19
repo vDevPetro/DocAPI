@@ -13,6 +13,29 @@ export const getAllCronograma = async (req, res) => {
     res.status(500).send(error.message);
   }
 }
+
+//Pegar todos os logs
+export const getAllLogs = async (req, res) => {
+  try {
+    const docSnap = await db.collection('CRONOGRAMA').get();
+    if (docSnap.empty) {
+      return res.status(404).json({ error: 'Nenhum cronograma encontrado.' });
+    }
+
+    const logs = docSnap.docs.map(doc => {
+      const data = doc.data();
+      return {
+        num_as: data.num_as,
+        log: data.log || 'Log não disponível' 
+      };
+    });
+
+    res.status(200).json(logs);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 //Pegar todos os cronogramas por AS
 export const getByAsCronograma = async (req, res) => {
   try {
