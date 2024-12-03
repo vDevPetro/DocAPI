@@ -17,7 +17,7 @@ export const downloadAllCronogramas = async (req, res) => {
 
     const [files] = await bucket.getFiles({ prefix: 'cronogramas/'});
 
-    if (files.lenght === 0){
+    if (files.length === 0){
       return res.status(400).json({ message: 'Nenhum cronograma foi encontrado'});
     }
 
