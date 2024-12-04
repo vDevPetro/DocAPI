@@ -4,10 +4,15 @@ import {
   getByAsCronograma,
   postCronograma,
   putCronograma,
-  getAllLogs
+  getAllLogs,
+  downloadAllCronogramas
 } from '../controllers/cronograma.js';
 
 const router = express.Router();
+
+//BAIXAR CRONOGRAMAS 
+// GET ALL CRONOGRAMAS https://apisiproj.vercel.app/cronograma/download
+router.get('/download', downloadAllCronogramas);
 
 // CRONOGRAMA CRUD
 //GET ALL https://apisiproj.vercel.app/cronograma
