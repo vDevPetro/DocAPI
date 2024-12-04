@@ -1,40 +1,4 @@
-import { db, bucket } from '../firebase.js';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-// acho que precisava configurar manualmente, qualquer coisa eu mudo 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-// Baixar todos os cronogramas
-export const downloadAllCronogramas = async (req, res) => {
-  try {
-    const directory = path.join(__dirname, '..', 'Downloads', 'cronogramasSiproj');
-
-    if (!fs.existsSync(directory)) {
-      fs.mkdirSync(directory, { recursive: true });
-    }
-
-    const [files] = await bucket.getFiles({ prefix: 'cronogramas/'});
-
-    if (files.length === 0){
-      return res.status(400).json({ message: 'Nenhum cronograma foi encontrado'});
-    }
-
-    for (const file of files) {
-      const filePath = path.join(directory, file.name.split('/').pop());
-      await file.download({destination: filePath});
-      console.log(`${file.name} baixado para ${filePath}`);
-    }
-
-    res.status(200).json({
-      message: `Cronogramas baixados para ${directory} com sucesso`,
-      files: files.map(file => file.name)
-    })
-  } catch (error) {
-    res.status(500).send(error.message);
-  }
-}
+import db from '../firebase.js';
 
 //Pegar todos os cronogramas
 export const getAllCronograma = async (req, res) => {

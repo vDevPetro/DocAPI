@@ -19,11 +19,9 @@ const serviceAccount = {
 };
 
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    storageBucket: process.env.FIREBASE_STORAGE_BUCKET
+    credential: admin.credential.cert(serviceAccount)
 });
 
 const db = admin.firestore();
-const bucket = admin.storage().bucket();
 
-export default { db, bucket };
+export default db;
