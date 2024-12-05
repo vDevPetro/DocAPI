@@ -1,4 +1,4 @@
-import db from '../firebase.js';
+import { db } from '../firebase.js';
 
 //Pegar todos os comentários por AS
 export const getComentarioAS = async (req, res) => {

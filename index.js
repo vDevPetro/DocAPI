@@ -16,6 +16,7 @@ dotenv.config({ path: '.env.local' });
 // Atribui chave a constante
 const API_KEY = process.env.API_KEY;
 
+
 const startServer = async () => {
   // REST API
   const app = express();

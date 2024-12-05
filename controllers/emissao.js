@@ -1,4 +1,4 @@
-import db from '../firebase.js'; 
+import { db } from '../firebase.js'; 
 
 //GET emissao por AS
 export const getByASEmissao = async (req, res) => {
