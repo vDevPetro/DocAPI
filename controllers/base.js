@@ -1,4 +1,4 @@
-import db from '../firebase.js';
+import { db } from '../firebase.js';
 
 //Pegar proximo id disponível para AS
 export const getNextAvailableId = async (req, res) => {
