@@ -15,7 +15,7 @@ dotenv.config({ path: '.env.local' });
 
 // Atribui chave a constante
 const API_KEY = process.env.API_KEY;
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
 
 const startServer = async () => {
   // REST API
