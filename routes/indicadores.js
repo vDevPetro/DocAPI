@@ -8,8 +8,7 @@ import {
 
 const router = express.Router();
 
-// INDICADORES
-// GET https://apisiproj.vercel.app/indicadores
+
 router.get('/', getAllCurvasS);
 router.get('/:id', getIndicadorById);
 router.put('/curvas/:id', updateCurvaS);
