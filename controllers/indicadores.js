@@ -79,6 +79,7 @@ export const getAllCurvasS = async (req, res) => {
     const indicadores = indicadoresSnap.docs.map(doc => ({
       id: doc.id,
       num_as: doc.data().num_as,
+      maxWork: doc.data().max_work,
       data: doc.data().data 
     }));
 
