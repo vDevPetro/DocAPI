@@ -14,7 +14,6 @@ export const getNextAvailableId = async (req, res) => {
     res.status(500).send(error.message);
   }
 }
-
 // Pegar todas as AS 
 export const getAllBase = async (req, res) => {
   try {
