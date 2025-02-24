@@ -1,5 +1,43 @@
 import db from '../firebase.js'; 
 
+// GET todas as emissões
+export const getAllEmissoes = async (req, res) => {
+  try {
+    const docSnapshot = await db.collection('EMISSAO').get();
+    
+    if (docSnapshot.empty) {
+      return res.status(404).json({ error: 'Nenhuma emissão encontrada.' });
+    }
+
+    const emissoes = [];
+    docSnapshot.forEach((doc) => {
+      emissoes.push({
+        id: doc.id,
+        num_as: doc.data().num_as,
+        emissao: doc.data().emissao,
+        motivo: doc.data().motivo,
+        desc_motivo: doc.data().desc_motivo,
+        coment_proj_lb: doc.data().coment_proj_lb,
+        coment_proj_rp: doc.data().coment_proj_rp,
+        coment_proj_real: doc.data().coment_proj_real,
+        emitir_proj_lb: doc.data().emitir_proj_lb,
+        emitir_proj_rp: doc.data().emitir_proj_rp,
+        emitir_proj_real: doc.data().emitir_proj_real,
+        atender_coment_proj_lb: doc.data().atender_coment_proj_lb,
+        atender_coment_proj_rp: doc.data().atender_coment_proj_rp,
+        atender_coment_proj_real: doc.data().atender_coment_proj_real,
+        situacao: doc.data().situacao,
+        justificativa: doc.data().justificativa,
+        log: doc.data().log
+      });
+    });
+
+    res.status(200).json(emissoes);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 //GET emissao por AS
 export const getByASEmissao = async (req, res) => {
   try {

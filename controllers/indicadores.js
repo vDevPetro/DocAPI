@@ -1,5 +1,42 @@
 import db from '../firebase.js';
 
+// GET todos os indicadores
+export const getAllIndicadores = async (req, res) => {
+  try {
+    const indicadoresSnap = await db.collection("INDICADORES").get();
+
+    if (indicadoresSnap.empty) {
+      return res.status(404).json({ message: "Nenhum indicador encontrado." });
+    }
+
+    const indicadores = await Promise.all(
+      indicadoresSnap.docs.map(async (doc) => {
+        const indicadorData = doc.data();
+        const dadosIefRef = db.collection("INDICADORES").doc(doc.id).collection("DADOSIEF");
+        const dadosIefSnap = await dadosIefRef.get();
+
+        const dadosIef = dadosIefSnap.empty
+          ? []
+          : dadosIefSnap.docs.map(d => ({
+              id: d.id,
+              ...d.data()
+            }));
+
+        return {
+          id: doc.id,
+          ...indicadorData,
+          DADOSIEF: dadosIef
+        };
+      })
+    );
+
+    res.status(200).json(indicadores);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+
 export const getIndicadorById = async (req, res) => {
   try {
     const indicadorRef = db.collection('INDICADORES').doc(req.params.id);
