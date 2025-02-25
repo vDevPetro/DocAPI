@@ -1,5 +1,33 @@
 import db from '../firebase.js';
 
+// GET todos os comentários
+export const getAllComentarios = async (req, res) => {
+  try {
+    const docSnapshot = await db.collection('COMENTARIOS').get();
+
+    if (docSnapshot.empty) {
+      return res.status(404).json({ error: 'Nenhum comentário encontrado.' });
+    }
+
+    const comentarios = [];
+    docSnapshot.forEach((doc) => {
+      comentarios.push({
+        id: doc.id,
+        comentario: doc.data().comentario,
+        user: doc.data().user,
+        data_envio: doc.data().data_envio,
+        num_as: doc.data().num_as,
+        perfil: doc.data().perfil,
+        nome: doc.data().nome
+      });
+    });
+
+    res.status(200).json(comentarios);
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
 //Pegar todos os comentários por AS
 export const getComentarioAS = async (req, res) => {
   try {

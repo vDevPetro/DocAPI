@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  getAllComentarios,
   getComentarioAS,
   postComentario,
   putComentario,
@@ -9,6 +10,8 @@ import {
 const router = express.Router();
 
 // COMENTARIOS CRUD
+// GET https://apisiproj.vercel.app/comentarios
+router.get('/', getAllComentarios)
 // GET COMENTARIO POR AS https://apisiproj.vercel.app/comentarios/:num_as
 router.get('/:num_as', getComentarioAS);
 // POST https://apisiproj.vercel.app/comentarios

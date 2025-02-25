@@ -1,5 +1,6 @@
 import express from 'express';
 import {
+  getAllIndicadores,
   getCurvaS,
   getIndicadorById,
   updateCurvaS,
@@ -9,6 +10,8 @@ import {
 const router = express.Router();
 
 // INDICADORES
+//GET https://apisiproj.vercel.app/indicadores/all
+router.get('/all', getAllIndicadores);
 // GET https://apisiproj.vercel.app/indicadores
 router.get('/', getAllCurvasS);
 router.get('/:id', getIndicadorById);
